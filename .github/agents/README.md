@@ -101,24 +101,40 @@ above.
 
 ### Planner (`planner.agent.md`) — included in this delivery
 Takes a Jira ticket key, fetches the ticket and its parent via the Atlassian
-MCP server, explores the currently open repo(s), and produces a read-only
+MCP server, explores the currently open repo(s), and produces an
 implementation plan (affected areas, proposed steps, open questions/risks,
 and a single Complexity label — no hours or breakdown; that detail belongs
 to the Estimation agent). Uses the ask-first workspace scope pattern.
 
+Operates in two phases:
+- **Plan** (always runs, read-only) — produces the plan and ends by asking
+  whether to implement it.
+- **Implement** (gated) — only runs on explicit approval. If the plan was
+  scope-limited (a repo wasn't open), re-confirms before implementing on
+  that partial basis. Implements only what the approved plan describes;
+  does not write tests (defers to the Test Generation agent) and does not
+  silently expand scope if something unexpected turns up mid-implementation.
+
 ### Planned, not yet built
 - **Impact Analysis** — scans frontend/backend/DB usage for a given
   API/component/table and reports what else would break. Ask-first pattern.
+  Read-only — no implement phase.
 - **Estimation** — reads a ticket + repo, produces complexity + hours by
   discipline (frontend/backend/testing), flags missing acceptance criteria.
-  Partial-with-label pattern.
+  Partial-with-label pattern. Read-only — no implement phase.
 - **Onboarding** — explains the open repo(s): architecture, build process,
   important modules, coding standards, common workflows. No MCP needed.
-  Partial-with-label pattern (never asks).
+  Partial-with-label pattern (never asks). Read-only — no implement phase.
 - **Code Review** (Angular / React / .NET) — per-stack review agents, no
   MCP needed, operate on diff/PR only.
 - **Test Generation** (Angular / React / .NET) — generates/extends unit
   tests for a diff or user-specified file(s), no MCP needed.
+
+**Note:** Planner is intentionally the only agent in this package with edit
+permissions (`editFiles` in its tools list), and only uses them after
+explicit approval. All other agents stay strictly read-only — keep it that
+way when building them, since giving multiple agents write access multiplies
+the review burden for any team adopting this package.
 
 ## Adoption notes for consuming projects
 
