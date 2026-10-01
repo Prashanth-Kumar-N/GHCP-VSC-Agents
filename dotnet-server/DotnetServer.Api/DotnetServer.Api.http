@@ -1,0 +1,19 @@
+@DotnetServer.Api_HostAddress = http://localhost:5112
+
+GET {{DotnetServer.Api_HostAddress}}/api/home/options
+Accept: application/json
+
+###
+
+GET {{DotnetServer.Api_HostAddress}}/api/home
+Accept: application/json
+
+###
+
+GET {{DotnetServer.Api_HostAddress}}/api/home/alerts/pfepShortage
+Accept: application/json
+
+###
+
+GET {{DotnetServer.Api_HostAddress}}/api/home/metrics/WeightDimension
+Accept: application/json

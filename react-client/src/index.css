@@ -1,0 +1,58 @@
+/* Define layers for Tailwind and PrimeReact */
+/* @layer theme, base, primereact, utilities; */
+
+/* PrimeReact theme (choose one, e.g. Lara Light Blue) */
+/* @import "primereact/resources/themes/lara-light-blue/theme.css" layer(theme); */
+
+/* PrimeReact core + icons */
+/* @import "primereact/resources/primereact.min.css" layer(primereact);
+@import "primeicons/primeicons.css" layer(primereact); */
+
+/* Tailwind layers */
+/* @import "tailwindcss/preflight" layer(base);
+@import "tailwindcss/utilities" layer(utilities); */
+
+/* -----------------------------------
+   Define layers for Tailwind + PrimeReact
+----------------------------------- */
+@layer base, theme, primereact, utilities;
+
+/* Tailwind layers */
+@import "tailwindcss" layer(base);
+@import "tailwindcss/utilities" layer(utilities);
+
+/* PrimeReact theme (pick one, e.g. Lara Light Blue) */
+@import "primereact/resources/themes/lara-light-blue/theme.css" layer(theme);
+
+/* PrimeReact core + icons */
+@import "primereact/resources/primereact.min.css" layer(primereact);
+@import "primeicons/primeicons.css" layer(primereact);
+
+
+#lookup_panel .p-overlaypanel-close {
+       background: #3b82f6;
+  position: absolute !important;
+  top: -1rem !important;
+  right: -1rem !important;
+  z-index: 10 !important;
+}
+
+.p-datatable-emptymessage td {
+  text-align: center !important;
+}
+
+.gradient-border-top {
+  position: relative;
+  border-bottom: none !important;
+}
+
+.gradient-border-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #fed7aa, #bfdbfe);
+  border-radius: 9999px 9999px 0 0;
+}

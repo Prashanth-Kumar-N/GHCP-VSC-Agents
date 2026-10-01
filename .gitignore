@@ -1,0 +1,4 @@
+/dotnet-server/DotnetServer.Api/bin/
+/dotnet-server/DotnetServer.Api/obj/
+/dotnet-server/DotnetServer.Api.Tests/obj/
+/dotnet-server/DotnetServer.Api.Tests/bin/
