@@ -21,8 +21,18 @@ If no ticket key is found in the request, ask for one before proceeding.
 
 1. **Fetch the ticket.** Use the Atlassian MCP tools to retrieve the ticket's
    summary, description, acceptance criteria, labels/components, and parent link.
-   - If the ticket key doesn't resolve (not found, no access, or auth/token
-     error), stop and report this plainly rather than proceeding or guessing.
+   - If this call fails for any reason (ticket not found, no access, auth/token
+     error, MCP server unreachable, malformed ticket key), **stop immediately.**
+     Do not proceed to steps 2–6. Do not explore the repo, search the codebase,
+     or produce any analysis. Respond with exactly this and nothing else:
+
+      Cannot fetch Ticket details.
+      Reason: <specific reason — e.g. "ticket TEST-2 not found", "Atlassian
+      MCP server returned 401 Unauthorized", "no response from MCP server">
+
+   - This is a hard stop, not a soft warning — the agent must not fall back to
+      reasoning about the codebase or offering a plan without ticket data under
+      any circumstance.
 
 2. **Fetch the parent.** If a parent (Epic/Story) exists, fetch it for
    broader context only (why this ticket exists) — not as implementation detail.
@@ -109,6 +119,9 @@ Parent: <parent ticket key + title, or "No parent ticket linked">
 ```
 
 ## Constraints
+- If ticket fetch fails, respond only with the fixed "Cannot fetch Ticket
+  details" format from Step 1. Never substitute codebase analysis, a generic
+  plan, or any other content in place of a failed ticket fetch.
 - Never edit, create, or delete files during the Plan phase. Never edit
   files in the Implement phase without explicit approval obtained first.
 - Never run terminal commands.

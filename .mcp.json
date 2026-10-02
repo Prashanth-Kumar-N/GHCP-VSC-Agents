@@ -1,0 +1,8 @@
+{
+	"mcpServers": {
+		"my-jira-server": {
+			"url": "https://mcp.atlassian.com/v1/mcp/authv2",
+			"type": "http"
+		}
+	}
+}

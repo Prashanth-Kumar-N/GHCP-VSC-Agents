@@ -28,11 +28,14 @@ Chat panel.
 
 ## Required companion config: MCP servers
 
-Agents that use Jira (`atlassian/*` in their `tools:` frontmatter) will not
-work without an MCP server entry. Add this to `.vscode/mcp.json` in the
-consuming project:
+MCP Server Configuration
+Atlassian (Jira) — ship as-is, no editing required
 
-```json
+The Atlassian MCP server entry contains no secrets, tokens, or project-specific
+values — it points to Atlassian's shared multi-tenant endpoint, identical for
+every user and every project:
+
+json
 {
   "servers": {
     "atlassian": {
@@ -41,11 +44,61 @@ consuming project:
     }
   }
 }
-```
 
-First use triggers a browser OAuth prompt against whichever Atlassian site
-the user authorizes (personal sandbox or the org's real Jira — same config,
-different auth).
+Authentication happens interactively via OAuth the first time a developer
+uses an agent that needs it (Planner, later Estimation). VS Code prompts a
+browser login, and the developer authorizes whichever Jira site they have
+access to — a personal sandbox, or the org's real Jira. Nothing in this file
+changes between those cases, so it's safe to bundle unedited in this package.
+
+Future servers that need real secrets — use inputs, not placeholders
+
+If a future agent needs a server with a genuine secret (an internal API
+token, a self-hosted Jira/Confluence instance, GitHub Enterprise PAT, etc.),
+do not ship a "mock value — please edit" file. Use VS Code's inputs
+mechanism instead:
+
+json
+{
+  "inputs": [
+    {
+      "id": "internal-api-token",
+      "type": "promptString",
+      "description": "Internal API token",
+      "password": true
+    }
+  ],
+  "servers": {
+    "internal-service": {
+      "url": "https://internal.example.com/mcp",
+      "headers": { "Authorization": "Bearer ${input:internal-api-token}" }
+    }
+  }
+}
+
+The committed file holds no real value — VS Code prompts each developer once
+on first use and stores the secret in its own secure storage, not in the
+JSON. This is safe to commit/bundle, unlike a placeholder file that relies on
+everyone remembering to edit it (and risks someone committing a real secret
+into that spot by accident).
+
+Where to put the config — workspace vs. user profile
+
+Consuming teams should choose based on how broadly they want these agents
+available:
+
+Workspace (.mcp.json, committed to the repo) — scopes the
+server to this one project. Shared automatically with anyone who clones
+the repo. Best if a team only wants these agents on one codebase.
+User profile (Command Palette → MCP: Open User Configuration) —
+scopes the server to the developer's VS Code profile, active across
+every workspace they open, and syncs across machines via Settings
+Sync. Best if a developer uses these agents across multiple repos/projects
+and doesn't want to duplicate the config into each one.
+
+Either location works with the agents in this package unchanged — the
+.agent.md files don't care which scope the server was registered at, only
+that it's active when the agent runs.
 
 ## Multi-repo setup
 
