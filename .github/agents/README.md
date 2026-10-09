@@ -28,14 +28,11 @@ Chat panel.
 
 ## Required companion config: MCP servers
 
-MCP Server Configuration
-Atlassian (Jira) — ship as-is, no editing required
+Agents that use Jira (`atlassian/*` in their `tools:` frontmatter) will not
+work without an MCP server entry. Add this to `.vscode/mcp.json` in the
+consuming project:
 
-The Atlassian MCP server entry contains no secrets, tokens, or project-specific
-values — it points to Atlassian's shared multi-tenant endpoint, identical for
-every user and every project:
-
-json
+```json
 {
   "servers": {
     "atlassian": {
