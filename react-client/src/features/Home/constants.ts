@@ -38,6 +38,7 @@ export const typesOfAlerts = [
   "erp",
   "demandGaps",
   "duplicateWorkcenter",
+  "unplannedItems",
 ] as const;
 
 // ------------------------------------------------------------------------------------------------------------
@@ -263,6 +264,28 @@ export const pfepDupWCAssignmentColumns = [
     [valueKey]: "IsEligibleForMultipleWC",
     type: "checkBox",
   },
+];
+
+export const unplannedItemsColumns = [
+  { [tableKey]: "Segment", [valueKey]: "ORG_ID" },
+  { [tableKey]: "Branch", [valueKey]: "FACILITY_ID" },
+  { [tableKey]: "Work Center", [valueKey]: "WORK_CENTER_ID" },
+  { [tableKey]: "Item Id", [valueKey]: "ITEM_ID" },
+  { [tableKey]: "Item Description", [valueKey]: "ITEM_DESC" },
+  { [tableKey]: "Source Work Center", [valueKey]: "SRC_WORK_CENTER_ID" },
+  {
+    [tableKey]: "First Demand Date",
+    [valueKey]: "DEMAND_DATE",
+    type: "date",
+  },
+  {
+    [tableKey]: "Alert Date",
+    [valueKey]: "CALCULATED_DATE",
+    sortable: true,
+    type: "date",
+  },
+  { [tableKey]: "Hot", [valueKey]: "HOT_IND", type: "checkBox" },
+  { [tableKey]: "Snooze", [valueKey]: "SNOOZE_IND", type: "checkBox" },
 ];
 
 /* alert tables columns end*/

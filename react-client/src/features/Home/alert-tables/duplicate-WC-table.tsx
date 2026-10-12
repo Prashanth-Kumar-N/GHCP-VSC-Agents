@@ -1,22 +1,25 @@
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import {
-  type AlertTableDataType,
-} from "../sample-data";
+import { type AlertTableDataType } from "../sample-data";
 import { tableKey, valueKey, pfepDupWCAssignmentColumns } from "../constants";
 
 export function DuplicateWCAlertTable({
   data,
   isConcise,
+  recordsKey = "MultipleAssignments",
+  columns = pfepDupWCAssignmentColumns,
 }: {
   data: AlertTableDataType;
   isConcise: boolean;
+  recordsKey?: "MultipleAssignments" | "UnplannedItems";
+  columns?: Array<Record<string, any>>;
 }) {
+  const records = data[recordsKey] ?? [];
+
   return (
     <div className="mt-4">
-      {/** Datatable with colored header according to the current theme. */}
       <DataTable
-        value={data.MultipleAssignments}
+        value={records}
         paginator={isConcise ? false : true}
         rows={10}
         rowsPerPageOptions={[5, 10, 25, 50]}
@@ -26,7 +29,7 @@ export function DuplicateWCAlertTable({
         size="small"
         showGridlines
       >
-        {pfepDupWCAssignmentColumns.map((col) => (
+        {columns.map((col) => (
           <Column
             key={col[valueKey]}
             field={col[valueKey]}

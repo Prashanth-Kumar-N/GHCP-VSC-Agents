@@ -4,7 +4,7 @@ import MOQCeilingAlert from "./alerts/moq-ceiling-alert";
 import ERPAlert from "./alerts/erp-alert";
 import DemandGapsAlert from "./alerts/demand-gaps-alert";
 import ExpandingSection from "../../components/expanding-section/ExpandingSection";
-import { legendData, typesOfAlerts } from "./constants";
+import { legendData, typesOfAlerts, unplannedItemsColumns } from "./constants";
 import React, { useEffect, useState, useMemo } from "react";
 import { DemandGapsTable } from "./alert-tables/demand-gaps-table";
 import { ERPDiscrepancyTable } from "./alert-tables/erp-alert-table";
@@ -51,6 +51,7 @@ const allAlerts = [
   "erp",
   "demandGaps",
   "duplicateWorkcenter",
+  "unplannedItems",
 ];
 
 const getAlertConfig = (alert: string) => {
@@ -91,6 +92,11 @@ const getAlertConfig = (alert: string) => {
       component: DuplicateWCAlert,
       name: "Duplicate Workcenter Assignment",
       key: "MultipleAssignmentCount",
+    },
+    unplannedItems: {
+      component: DuplicateWCAlert,
+      name: "Unplanned Items",
+      key: "UnplannedItemsCount",
     },
   };
 
@@ -225,6 +231,32 @@ export default function Alerts({
         component = (
           <>
             <ERPDiscrepancyTable data={data} isConcise={true} />
+            <div className="w-full bg-slate-50 flex items-center justify-end p-6">
+              <Button
+                label="View All records"
+                size="small"
+                link
+                text
+                severity="warning"
+                icon="pi pi-chevron-right"
+                iconPos="right"
+                className="h-9 w-45"
+              />
+            </div>
+          </>
+        );
+      } else if (
+        alertType === "unplannedItems" &&
+        data.type === "unplanned_items_alerts"
+      ) {
+        component = (
+          <>
+            <DuplicateWCAlertTable
+              data={data}
+              isConcise={true}
+              recordsKey="UnplannedItems"
+              columns={unplannedItemsColumns}
+            />
             <div className="w-full bg-slate-50 flex items-center justify-end p-6">
               <Button
                 label="View All records"
@@ -452,6 +484,7 @@ const SortableItem = ({
         onClick={setAlertType}
         isLoading={isLoading}
         isDragging={isDragging}
+        label={Alert.name}
         data={Alert.key ? data?.[Alert.key] || null : null}
       />
       {!isLoading && (

@@ -816,6 +816,75 @@ export const homeDashbaordData = {
   ],
   InventoryAvailabilityCount: 0,
   MultipleAssignmentCount: 13,
+  UnplannedItemsAlertGraphs: [
+    {
+      Week_Start_Date: "2026-04-19T00:00:00",
+      Total_Count: 14,
+      series: [
+        {
+          name: "BP New",
+          value: 8,
+        },
+        {
+          name: "<2 Weeks",
+          value: 3,
+        },
+        {
+          name: "2-4 Weeks",
+          value: 2,
+        },
+        {
+          name: ">4 Weeks",
+          value: 1,
+        },
+      ],
+    },
+    {
+      Week_Start_Date: "2026-04-12T00:00:00",
+      Total_Count: 11,
+      series: [
+        {
+          name: "BP New",
+          value: 5,
+        },
+        {
+          name: "<2 Weeks",
+          value: 4,
+        },
+        {
+          name: "2-4 Weeks",
+          value: 1,
+        },
+        {
+          name: ">4 Weeks",
+          value: 1,
+        },
+      ],
+    },
+    {
+      Week_Start_Date: "2026-04-05T00:00:00",
+      Total_Count: 9,
+      series: [
+        {
+          name: "BP New",
+          value: 4,
+        },
+        {
+          name: "<2 Weeks",
+          value: 2,
+        },
+        {
+          name: "2-4 Weeks",
+          value: 1,
+        },
+        {
+          name: ">4 Weeks",
+          value: 2,
+        },
+      ],
+    },
+  ],
+  UnplannedItemsCount: 14,
 };
 
 export type HomeDashboardData = typeof homeDashbaordData;
@@ -1585,6 +1654,84 @@ export const duplciateWorkcenterSampleData = {
   TotalPageCount: 2,
   TotalCount: 13,
   type: "pfep_duplicate_workcenter_assignment",
+};
+
+export const unplannedItemsSampleData = {
+  UnplannedItems: [
+    {
+      ORG_ID: "DEF",
+      FACILITY_ID: "STH001",
+      WORK_CENTER_ID: "S7",
+      ITEM_ID: "3512890",
+      ITEM_DESC: "COVER,THERMAL SHIELD",
+      SRC_WORK_CENTER_ID: "APL001",
+      DEMAND_DATE: "02/27/2025",
+      CALCULATED_DATE: "06/07/2021",
+      HOT_IND: null,
+      SNOOZE_IND: null,
+    },
+    {
+      ORG_ID: "DEF",
+      FACILITY_ID: "STH001",
+      WORK_CENTER_ID: "S7",
+      ITEM_ID: "3851170",
+      ITEM_DESC: "PANEL,CONTROL MOUNT",
+      SRC_WORK_CENTER_ID: "APM001",
+      DEMAND_DATE: "03/05/2025",
+      CALCULATED_DATE: "06/07/2021",
+      HOT_IND: true,
+      SNOOZE_IND: false,
+    },
+    {
+      ORG_ID: "DEF",
+      FACILITY_ID: "STH001",
+      WORK_CENTER_ID: "S7",
+      ITEM_ID: "4041512",
+      ITEM_DESC: "BRACKET,REAR SUPPORT",
+      SRC_WORK_CENTER_ID: "YPG001",
+      DEMAND_DATE: "03/12/2025",
+      CALCULATED_DATE: "06/07/2021",
+      HOT_IND: null,
+      SNOOZE_IND: null,
+    },
+    {
+      ORG_ID: "DEF",
+      FACILITY_ID: "STH001",
+      WORK_CENTER_ID: "S7",
+      ITEM_ID: "4201165",
+      ITEM_DESC: "SEAL,DOOR FRAME",
+      SRC_WORK_CENTER_ID: "RET001",
+      DEMAND_DATE: "03/18/2025",
+      CALCULATED_DATE: "06/07/2021",
+      HOT_IND: false,
+      SNOOZE_IND: true,
+    },
+  ],
+  segment: [
+    {
+      ORG_ID: "DEF",
+      IsSelected: true,
+    },
+    {
+      ORG_ID: "DLV",
+      IsSelected: false,
+    },
+  ],
+  warehouse: [
+    {
+      FACILITY_ID: "STH001",
+      IsSelected: true,
+    },
+    {
+      FACILITY_ID: "APL001",
+      IsSelected: false,
+    },
+  ],
+  PageIndex: 1,
+  PageSize: 10,
+  TotalPageCount: 1,
+  TotalCount: 4,
+  type: "unplanned_items_alerts",
 };
 
 export const erpDiscrepancySampleData = {
@@ -2682,7 +2829,8 @@ export type AlertTableDataType =
   | typeof pfepShortageAlertsSampleData
   | typeof erpDiscrepancySampleData
   | typeof moqCeilingSampleData
-  | typeof duplciateWorkcenterSampleData;
+  | typeof duplciateWorkcenterSampleData
+  | typeof unplannedItemsSampleData;
 /* alert tables sample data end */
 
 // -------------------------------------------------------------------------------------------------------------

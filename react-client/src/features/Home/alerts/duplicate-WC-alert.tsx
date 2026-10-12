@@ -4,7 +4,7 @@ import { AlertMetricSkeleton } from '../../../components/Skeletons/alert-metric'
 import type { homeDashbaordData } from "../sample-data";
 
 interface DuplicateWCAlertProps {
-  data?: typeof homeDashbaordData.MultipleAssignmentCount;
+  data?: typeof homeDashbaordData.MultipleAssignmentCount | typeof homeDashbaordData.UnplannedItemsCount;
   label?: string;
   icon?: React.ReactNode;
   onClick?: (alertType: (typeof typesOfAlerts)[number]) => void;
@@ -59,7 +59,7 @@ const DuplicateWCAlert = ({
   if (isLoading) return <AlertMetricSkeleton />;
   return (
     <div
-      onClick={() => onClick && onClick("duplicateWorkcenter")}
+      onClick={() => onClick && onClick(label === "Unplanned Items" ? "unplannedItems" : "duplicateWorkcenter")}
       role={onClick ? "button" : undefined}
       tabIndex={onClick ? 0 : undefined}
       className={`
